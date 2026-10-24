@@ -1,0 +1,19 @@
+# At a v* tag: build the plugin on its base image, attach the image archive and the filled plugin.json
+# to a GitHub Release, then submit the tag to the V2Mac store.
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions: { contents: write }
+jobs:
+  release:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker pull "$(cat base.txt)"
+      - name: Package
+        env: { RELEASE_TAG: "${{ github.ref_name }}" }
+        run: Scripts/package.sh . "$(cat base.txt)" "https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG" "https://github.com/$GITHUB_REPOSITORY" "$GITHUB_SHA"
+      - name: Release
+        env: { GH_TOKEN: "${{ github.token }}", RELEASE_TAG: "${{ github.ref_name }}" }
+        run: gh release create "$RELEASE_TAG" dist/*.tar.gz dist/plugin.json icon.svg --title "$RELEASE_TAG" --notes "$(python3 -c 'import json;print(json.load(open("plugin.json"))["changelog"])')"

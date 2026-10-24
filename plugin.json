@@ -1,0 +1,21 @@
+{
+  "api": 1,
+  "id": "chromium",
+  "name": "Chromium",
+  "version": "0.1.0",
+  "publisher": "V2Mac",
+  "description": "The open-source browser behind Google Chrome, from Debian. Every site sees only this mini VM's exit, in its time zone.",
+  "icon": "icon.svg",
+  "display": "gui",
+  "launch": {
+    "cmd": [
+      "/usr/local/bin/start.sh"
+    ]
+  },
+  "permissions": [
+    "clipboard",
+    "shared"
+  ],
+  "changelog": "First version: Chromium from Debian 13.",
+  "securityNotes": "Clipboard for copy and paste, Shared for downloads and uploads. Runs with --no-sandbox: the mini VM container allows no user namespaces or setuid, so Chromium's own sandbox can't start; the container and the mini VM are the isolation."
+}

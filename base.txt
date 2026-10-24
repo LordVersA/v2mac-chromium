@@ -1,0 +1,1 @@
+ghcr.io/lordversa/v2mac-base-gui@sha256:17756e028364aa2f128126415d835f7913864c27f152c9073a7aba9f12ebe2cc
